@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/admin/head') -%>
+    <title>Danh mục sản phẩm</title>
+</head>
+<body>
+    <div class="wrapper">
+        <%- include('../partials/admin/sidebar') -%>
+
+        <div class="main">
+            <%- include('../partials/admin/navbar') -%>
+
+            <main class="content">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin/home">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/orders">Đơn đặt hàng</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Chi tiết đơn hàng</li>
+                        </ol>
+                      </nav>
+                    <div class="col-xl-12">
+                        <% if (message) { %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                              <strong><%= message %></strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                          <% } %>
+                        <h4>THÔNG TIN ĐƠN HÀNG</h4>
+                    </div>
+                    <div class="col-xl-12">
+                        <% if (orders) { %>
+                        <div class="table-responsive">
+                            <table class="table table-hover mt-3">
+                                <thead>
+                                  <tr>
+                                    <th class="col-1">STT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                        <% function formatCurrency(number) {
+                                            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+                                        }
+                                        let i = 1;
+                                        orders.products.forEach( (order) => { %>
+                                            <tr>
+                                                <td><p><%- i %></p></td>
+                                                <td><p><%- order.name %></p></td>
+                                                <td><img style="width: 70px; height: 70px" src="/images/products/<%- order.image %>" alt="image"></td>
+                                                <td><p><%- formatCurrency(order.price) %></p></td>
+                                                <td><p><%- order.quantity %></p></td>
+                                                <td><p><%- formatCurrency(order.price * order.quantity) %></p></td> 
+                                            </tr>
+                                        <% 
+                                        i++;
+                                        }) %>
+                                        
+                                    </tbody>
+                                </table>
+                        </div>
+                            <div class="d-flex justify-content-between pl-2 pr-2">
+                                <p>Tổng tiền:</p>
+                                <p><%- formatCurrency(orders.totalAmount) %></p>
+                            </div>
+                            <hr />
+                            <div class="d-flex">
+                                <% if (orders.status === 'Đang chờ duyệt') { %>
+                                    <div>
+                                        <form method="post" action="/admin/order-browsing/<%- orders._id %>">
+                                            <button type="submit" class="btn btn-success">Duyệt</button>
+                                        </form>
+                                    </div>
+                                    <div  class="ml-2">
+                                        <form method="post" action="/admin/cancel-order/<%- orders._id %>">
+                                            <button type="submit" class="btn btn-warning">Huỷ</button>
+                                        </form>
+                                    </div>
+                                <% } else if (orders.status === 'Đang giao'){ %>
+                                    <div>
+                                        <form method="post" action="/admin/success-order/<%- orders._id %>">
+                                            <button type="submit" class="btn btn-success">Hoàn thành</button>
+                                        </form>
+                                    </div>
+                                    <div class="ml-2">
+                                        <form method="post" action="/admin/cancel-order/<%- orders._id %>">
+                                            <button type="submit" class="btn btn-warning">Huỷ</button>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        function confirmDelete() {
+        const confirmDelete = confirm('Bạn có chắc muốn xóa?');
+        return confirmDelete;
+    }
+    </script>
+
+    <%- include('../partials/admin/js') -%>
+</body>
+</html>

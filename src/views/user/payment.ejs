@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/user/head') -%>
+    <title>Chi tiết sản phẩm</title>
+  </head>
+  <body>
+    <%- include('../partials/user/header') -%> <% function
+    formatCurrency(number) { return new Intl.NumberFormat('vi-VN', { style:
+    'currency', currency: 'VND' }).format(number); }; let sumMoney = 0; %>
+    <div class="container bg-light p-5">
+      <form method="post" action="/order" class="table-responsive">
+        <div>
+          <h4 style="padding: 15px 0" class="text-center">
+            Thông tin thanh toán
+          </h4>
+        </div>
+        <div class="form-group">
+          <label for="name">Họ và tên:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="<%- user.name %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Số điện thoại người nhận hàng:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phone"
+            name="phone"
+            value="<%- user.phone %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Địa chỉ người nhận hàng:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address"
+            name="address"
+            value="<%- user.address %>"
+          />
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Name</th>
+              <th scope="col">Hình ảnh</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Giá</th>
+              <th scope="col">Tổng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (products) { let i = 1; products.forEach( (item) => { sumMoney
+            += item.quantity * item.price; %>
+            <tr>
+              <td><p><%- i++ %></p></td>
+              <td><p><%- item.name %></p></td>
+              <td style="width: 70px; height: 70px">
+                <img
+                  style="width: 100%"
+                  src="/images/products/<%- item.image %>"
+                  alt="image"
+                />
+              </td>
+              <td><p><%- item.quantity %></p></td>
+              <td><p><%- formatCurrency(item.price) %></p></td>
+              <td><p><%- formatCurrency(item.quantity * item.price) %></p></td>
+            </tr>
+            <% }) %> <%} else { %>
+            <p>Giỏ hàng trống</p>
+            <% } %>
+          </tbody>
+        </table>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <p>Tổng tiền:</p>
+          <p class="mr-5"><%- formatCurrency(sumMoney) %></p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <a class="btn text-white">Tiếp tục mua sắm</a>
+          <button type="submit" href="/order" class="btn text-white">
+            Thanh toán
+          </button>
+        </div>
+      </form>
+    </div>
+    <%- include('../partials/user/footer') -%> <%-
+    include('../partials/user/js') -%>
+  </body>
+</html>

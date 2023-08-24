@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/admin/head') -%>
+    <title>Danh mục sản phẩm</title>
+</head>
+<body>
+    <div class="wrapper">
+        <%- include('../partials/admin/sidebar') -%>
+
+        <div class="main">
+            <%- include('../partials/admin/navbar') -%>
+
+            <main class="content">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin/home">Trang chủ</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
+                        </ol>
+                      </nav>
+                    <div class="col-xl-12">
+                        <% if (message) { %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                              <strong><%= message %></strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                          <% } %>
+                        <h4>DANH SÁCH SẢN PHẨM</h4>
+                        <a class="btn btn-primary mt-2" href="/admin/product/add-product">Thêm mới</a>
+                    </div>
+                    <div class="col-xl-12 table-responsive">
+                        <table class="table table-hover mt-3">
+                            <thead>
+                              <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Mô tả</th>
+                                <th>Hình ảnh</th>
+                                <th>Tên danh mục</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td></td></tr>
+                                <%
+                                function formatCurrency(number) {
+                                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+                                }
+                                let i = 1
+                                products.forEach((item) => { %>
+                                    <tr>
+                                        <td><%= i %></td>
+                                        <td><p class="truncate"><%= item.name %></p></td>
+                                        <td><%= formatCurrency(item.price) %></td>
+                                        <td><%= item.countInStock %></td>
+                                        <td><p class="truncate"><%= item.description %></p></td>
+                                        <td><img style="width: 100px; height: 100px; overflow: hidden" src="/images/products/<%= item.image %>" alt="image"></td>
+                                        <td><%= item.category.name %></td>
+                                        <td class="text-center">
+                                            <a 
+                                                href="/admin/product/edit-product/<%= item._id %>" 
+                                                class="btn btn-primary mt-1">
+                                                Sửa
+                                                </a>
+                                            <a 
+                                                href="/admin/product/delete-product/<%= item._id %>" 
+                                                class="btn btn-primary mt-1 del" 
+                                                onclick="return confirmDelete()">
+                                                Xoá
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% 
+                                i++
+                                }); 
+                                %>
+                            </tbody>
+                          </table>
+                    </div>
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                        <% if(currentPage > 1) { %>
+                            <li class="page-item">
+                            <a class="page-link" href="?page=<%= currentPage-1 %>&limit=<%= limit %>"><<</a>
+                            </li>
+                        <% } %>
+                        <% for(let i=1; i<=totalPages; i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" href="?page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+                            </li>
+                        <% } %>
+                        <% if(currentPage < totalPages) { %>
+                            <li class="page-item">
+                            <a class="page-link" href="?page=<%= currentPage+1 %>&limit=<%= limit %>">>></a>
+                            </li>
+                        <% } %>
+                        </ul>
+                    </nav>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        function confirmDelete() {
+        const confirmDelete = confirm('Bạn có chắc muốn xóa?');
+        return confirmDelete;
+    }
+    </script>
+
+    <%- include('../partials/admin/js') -%>
+</body>
+</html>

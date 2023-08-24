@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/admin/head') -%>
+    <title>Sửa danh mục</title>
+</head>
+<body>
+    <div class="wrapper">
+        <%- include('../partials/admin/sidebar') -%>
+
+        <div class="main">
+            <%- include('../partials/admin/navbar') -%>
+
+            <main class="content">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/admin/home">Trang chủ</a></li>
+                          <li class="breadcrumb-item"><a href="/admin/product">Danh sách sản phẩm</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Sửa sản phẩm</li>
+                        </ol>
+                      </nav>
+                    <div class="col-xl-12">
+                        <% if (error) { %>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              <strong><%= error %></strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                        <% } %>
+                        <h4>SỬA SẢN PHẨM</h4>
+                    </div>
+                    <div class="col-xl-12">
+                        <form class="form-horizontal" action="/admin/product/edit-product/<%= product._id %>" method="post"  enctype="multipart/form-data">
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Tên sản phẩm:</label>
+                                <input class="form-control" name="name" placeholder="Vui lòng nhập tên danh mục" type="text" value="<%= product.name %>"/>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Giá:</label>
+                                <input class="form-control" name="price" placeholder="Vui lòng nhập giá" type="number" value="<%= product.price %>"/>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Số lượng:</label>
+                                <input class="form-control" name="countInStock" placeholder="Vui lòng nhập giá" type="number" value="<%= product.countInStock %>"/>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Mô tả:</label>
+                                <input class="form-control" name="description" placeholder="Vui lòng nhập mô tả" type="text" value="<%= product.description %>"/>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Hình ảnh:</label>
+                                <input class="form-control" name="image" type="file"/>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Tên danh mục:</label>
+                                <% if (product) { %>
+                                    <select class="form-control" name="category" id="category">
+                                        <% categories.forEach( (item) => { %>
+                                            <option value="<%= item._id %>" <%= item._id.toString() == product.category.toString() ? 'selected' : '' %>><%= item.name %></option>
+                                        <% }) %>
+                                    </select>
+                                <% } %>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <%- include('../partials/admin/js') -%>
+</body>
+</html>

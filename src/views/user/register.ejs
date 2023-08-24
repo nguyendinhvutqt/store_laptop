@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng kí tài khoản</title>
+    <link rel="stylesheet" href="/user/css/login.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="form">
+            <h2>ĐĂNG KÍ NGƯỜI DÙNG</h2>
+            <% if (error) { %>
+                <div class="error" role="alert">
+                  <%= error %>
+                </div>
+              <% } %>
+            <form method="post" action="/user/sign-up">
+                <label>Email:</label>
+                <input 
+                    type="email"
+                    name="email"
+                    placeholder='Vui lòng nhập email'
+                />
+                <label>Họ và tên:</label>
+                <input 
+                    type="text"
+                    name="name"
+                    placeholder='Vui lòng nhập họ và tên'
+                />
+                <label>Số điện thoại:</label>
+                <input 
+                    type="text"
+                    name="phone"
+                    placeholder='Vui lòng nhập số điện thoại'
+                />
+                <label>Địa chỉ:</label>
+                <input 
+                    type="text"
+                    name="address"
+                    placeholder='Vui lòng nhập địa chỉ'
+                />
+                <label>Mật khẩu:</label>
+                <input 
+                    type="password"
+                    name="password"
+                    placeholder='Vui lòng nhập nhập mật khẩu'
+                />
+                <label>Nhập lại mật khẩu:</label>
+                <input 
+                    type="password"
+                    name="confirmPassword"
+                    placeholder='Vui lòng nhập lại mật khẩu'
+                />
+                <button type="submit">Đăng kí</button>
+                <div class="link-div">
+                    Bạn đã có tài khoản? <a class="link" href="/user/sign-in"> Đăng nhập</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

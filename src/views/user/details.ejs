@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/user/head') -%>
+    <title>Chi tiết sản phẩm</title>
+  </head>
+  <body>
+    <%- include('../partials/user/header') -%> <% if (product) { function
+    formatCurrency(number) { return new Intl.NumberFormat('vi-VN', { style:
+    'currency', currency: 'VND' }).format(number); }%>
+    <form class="d-flex" method="post" action="/add-to-cart">
+      <div class="col-xl-6 p-4">
+        <img src="/images/products/<%- product.image %>" alt="image" />
+      </div>
+      <div class="col-xl-6 p-4 mt-3">
+        <input type="hidden" name="productId" value="<%- product._id %>" />
+        <h4><%- product.name %></h4>
+        <p class="mt-3"><%-formatCurrency(product.price)%></p>
+        <h4 class="mt-3">Thông số kỹ thuật</h4>
+        <div class="quantity-control mt-3">
+          <p class="btn mr-2" style="padding: 5px 15px" id="decrease-btn">-</p>
+          <input
+            type="number"
+            name="quantity"
+            id="quantity-input"
+            min="1"
+            value="1"
+          />
+          <p class="btn ml-2" style="padding: 5px 15px" id="increase-btn">+</p>
+        </div>
+        <div>
+          <button type="submit" class="mt-3 p-2">Thêm Vào giỏ hàng</button>
+        </div>
+      </div>
+    </form>
+    <div class="col-xl-12 ml-4 mr-4"><%- product.description %></div>
+    <% } %> <%- include('../partials/user/footer') -%> <%-
+    include('../partials/user/js') -%>
+    <script>
+      const decreaseBtn = document.getElementById("decrease-btn");
+      const increaseBtn = document.getElementById("increase-btn");
+      const quantityInput = document.getElementById("quantity-input");
+
+      decreaseBtn.addEventListener("click", () => {
+        let currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+          currentQuantity--;
+          quantityInput.value = currentQuantity;
+        }
+      });
+
+      increaseBtn.addEventListener("click", () => {
+        let currentQuantity = parseInt(quantityInput.value);
+        currentQuantity++;
+        quantityInput.value = currentQuantity;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="/user/css/login.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="form">
+            <h2>ĐĂNG NHẬP NGƯỜI DÙNG</h2>
+            <% if (error) { %>
+                <div class="error" role="alert">
+                  <%= error %>
+                </div>
+              <% } %>
+            <form  method="post" action="/user/sign-in">
+                <label>Email:</label>
+                <input 
+                    type="email"
+                    name="email"
+                    placeholder='Vui lòng nhập email'
+                />
+                <label>Mật khẩu:</label>
+                <input 
+                    type="password"
+                    name="password"
+                    placeholder='Vui lòng nhập mật khẩu'
+                />
+                <button type="submit">Đăng nhập</button>
+            </form>
+            <div class="link-div">
+                Bạn chưa có tài khoản? <a class="link" href="/user/sign-up"> Đăng kí tài khoản</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

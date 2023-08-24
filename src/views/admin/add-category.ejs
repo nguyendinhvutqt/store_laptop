@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/admin/head') -%>
+    <title>Thêm danh mục</title>
+</head>
+<body>
+    <div class="wrapper">
+        <%- include('../partials/admin/sidebar') -%>
+
+        <div class="main">
+            <%- include('../partials/admin/navbar') -%>
+
+            <main class="content">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin/home">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/category">Danh mục sản phẩm</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Thêm danh mục sản phẩm</li>
+                        </ol>
+                      </nav>
+                    <div class="col-xl-12">
+                        <% if (error) { %>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              <strong><%= error %></strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                        <% } %>
+                        <h4>THÊM MỚI DANH MỤC</h4>
+                    </div>
+                    <div class="col-xl-12">
+                        <form class="form-horizontal" action="/admin/category/add-category" method="post">
+                            <div class="form-group mt-3">
+                                <label for="" class="control-label">Tên danh mục:</label>
+                                <input class="form-control" name="name" placeholder="Vui lòng nhập tên danh mục" type="text"/>
+                                
+                                <button type="submit" class="btn btn-primary mt-3">Thêm mới</button>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <%- include('../partials/admin/js') -%>
+</body>
+</html>
