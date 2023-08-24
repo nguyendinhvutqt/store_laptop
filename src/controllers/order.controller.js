@@ -64,7 +64,7 @@ exports.getOrdersAdmin = async (req, res) => {
 exports.getOrderDetailsAdmin = async (req, res) => {
   try {
     const orderId = req.params.id;
-    const orders = await Order.findById(orderId);
+    const orders = await Order.findById(orderId).sort({ status: 1 });
     return res.render("admin/order-details", { orders });
   } catch (error) {
     return res.render("partials/user/error", { error: error.message });
