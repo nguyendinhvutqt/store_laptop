@@ -53,7 +53,7 @@ exports.orderProducts = async (req, res) => {
 
 exports.getOrdersAdmin = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().sort({ status: 0 });
     const message = req.flash("success")[0];
     return res.render("admin/orders", { orders, message });
   } catch (error) {
@@ -64,7 +64,7 @@ exports.getOrdersAdmin = async (req, res) => {
 exports.getOrderDetailsAdmin = async (req, res) => {
   try {
     const orderId = req.params.id;
-    const orders = await Order.findById(orderId).sort({ status: 1 });
+    const orders = await Order.findById(orderId);
     return res.render("admin/order-details", { orders });
   } catch (error) {
     return res.render("partials/user/error", { error: error.message });
